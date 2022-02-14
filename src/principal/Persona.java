@@ -1,6 +1,8 @@
 package principal;
 
-enum genero {H, M, O}
+import java.util.ArrayList;
+
+enum Genero {H, M, O}
 
 public class Persona implements Comparable<Persona> {
     /**
@@ -21,7 +23,7 @@ public class Persona implements Comparable<Persona> {
     private double altura;
     private String nombre;
     private String DNI;
-    private genero genero;
+    private Genero genero;
 
     /**
      * Constructor por defecto
@@ -30,14 +32,14 @@ public class Persona implements Comparable<Persona> {
     }
 
     /**
-     * @param edad
+     * @param edad años numero entero
      * @param peso   en Kg
      * @param altura en cm
      * @param nombre no puede contener numeros
      * @param DNI    8 números y una letra al final en mayúscula
      * @param genero controlado por enum tiene que ser H, M, O
      */
-    public Persona(int edad, double peso, double altura, String nombre, String DNI, genero genero) {
+    public Persona(int edad, double peso, double altura, String nombre, String DNI,Genero genero) {
         this.edad = edad;
         this.peso = peso;
         this.altura = altura;
@@ -47,10 +49,24 @@ public class Persona implements Comparable<Persona> {
     }
 
     /**
+     *
+     * @param persona
+     */
+    public Persona(Persona persona) {
+        this.edad = persona.edad;
+        this.peso = persona.peso;
+        this.altura = persona.altura;
+        this.nombre = persona.nombre;
+        this.DNI = persona.DNI;
+        this.genero = persona.genero;
+    }
+
+
+    /**
      * Metodo engargado de calcular el imc con peso y altura y devolviendo -1 si esta con peso insuficiente 0 si es
      * normopeso y 1 si tiene sobrepeso.
      *
-     * @return
+     * @return imc de la persona
      */
     public int IMC() {
         int IMC;
@@ -74,21 +90,68 @@ public class Persona implements Comparable<Persona> {
             System.out.println("Es mayor de edad");
         }
     }
+    public static void pesoMedio (ArrayList<Persona> lista){
+
+        double pesoMedio =0;
+        for (Persona o : lista){
+            pesoMedio=pesoMedio+o.getPeso();
+        }
+        pesoMedio=pesoMedio/lista.size();
+        System.out.println("El peso medio de las personas introducidas es: " + pesoMedio);
+    }
+    public static void alturaMedia (ArrayList<Persona> lista){
+        double alturaMedia =0;
+        for (Persona o : lista){
+            alturaMedia=alturaMedia+o.getAltura();
+        }
+        alturaMedia=alturaMedia/lista.size();
+        System.out.println("La altira media de las personas introducidas es: " + alturaMedia);
+    }
+    public  static void edadMedia (ArrayList<Persona> lista){
+        double edadMedia =0;
+        for (Persona o : lista){
+            edadMedia=edadMedia+o.getEdad();
+        }
+        edadMedia=edadMedia/lista.size();
+        System.out.println("La edad media de las personas introducidas es: " + edadMedia);
+
+    }
+    public static void obtenerGenero(ArrayList<Persona> lista){
+        int H=0;
+        int M=0;
+       for (Persona o: lista)
+       {
+           if (o.getGenero() == Genero.H){
+               H++;
+           }
+           else if (o.getGenero() == Genero.M){
+               M++;
+           }
+       }
+        System.out.println("Hay " + H + " hombres" );
+        System.out.println("Hay " + M + " mujeres" );
+
+    }
 
     public int getEdad() {
         return edad;
     }
 
-    public void setEdad(int edad) {
-        this.edad = edad;
+    public double getPeso() {
+        return peso;
     }
+
+    public double getAltura() {
+        return altura;
+    }
+
+    public Genero getGenero() {
+        return genero;
+    }
+
 
     public String getNombre() {
         return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
     }
 
     @Override
